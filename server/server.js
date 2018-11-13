@@ -20,8 +20,12 @@ app.post('/todos', (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-    console.log("coeg");
+app.get('/todos', (req, res) => {
+    Todo.find().then((todos) => {
+        res.send({todos})
+    }).catch((err) => {
+        res.status(400).send(err);
+    });
 });
 
 

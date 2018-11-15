@@ -59,7 +59,7 @@ app.delete('/todos/:id', (req, res) => {
             res.status(404).send();
         }
         
-        res.send(todo)
+        res.send({todo})
     }).catch((err) => {
         res.send(400).send();
     });

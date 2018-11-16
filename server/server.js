@@ -1,3 +1,5 @@
+require('./config/config');
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,7 +8,7 @@ const {ObjectID} = require('mongodb');
 const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {user} = require('./models/user');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app = express();
 app.use(bodyParser.json())
@@ -74,11 +76,11 @@ app.patch('/todos/:id', (req, res) => {
         return res.status(404).send();
     }
 
-    if(_.isBoolean(body.compelted) && body.completed){
+    if(_.isBoolean(body.completed) && body.completed){
         body.completedAt = new Date().getTime();
     }else{
-        body.compelted = false;
-        body.compeltedAt = null;
+        body.completed = false;
+        body.completedAt = null;
     }
 
     Todo.findByIdAndUpdate(id, {$set: body}, {new:true}).then((todo) => {
